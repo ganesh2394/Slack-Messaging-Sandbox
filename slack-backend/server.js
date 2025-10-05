@@ -1,15 +1,21 @@
+const express = require("express");
 const dotevn = require("dotenv");
 dotevn.config();
 
-const express = require("express");
+const { port } = require("./config/slack.config");
+const authRoutes = require("./routes/auth.routes");
+const messageRoutes = require("./routes/message.routes");
 
 const app = express();
-const PORT = process.env.PORT || 3020;
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Slack Backend Server is Running!");
 });
 
-app.listen(PORT, () => {
-  console.log(`Server started on http://localhost:${PORT}`);
+app.use("/api/slack", authRoutes);
+app.use("/api/slack/messages", messageRoutes);
+
+app.listen(port, () => {
+  console.log(`Server started on http://localhost:${port}`);
 });
