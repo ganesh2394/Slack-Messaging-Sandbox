@@ -5,15 +5,18 @@ dotevn.config();
 const { port } = require("./config/slack.config");
 const authRoutes = require("./routes/auth.routes");
 const messageRoutes = require("./routes/message.routes");
+const oauthRoutes = require("./routes/oauth.routes");
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.send("Slack Backend Server is Running!");
 });
 
 app.use("/api/slack", authRoutes);
+app.use("/api/slack", oauthRoutes);
 app.use("/api/slack/messages", messageRoutes);
 
 app.listen(port, () => {

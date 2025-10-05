@@ -39,7 +39,7 @@ exports.getMessages = async (req, res) => {
 };
 
 exports.editMessage = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { ts, text } = req.body;
   try {
     const result = await slackService.editMessage(ts, text);
